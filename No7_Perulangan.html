@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menghitung Biaya Tagihan Listrik PLN BANDUNG</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .container { width: 500px; margin: 0 auto; padding: 20px; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid black; padding: 5px; text-align: left; }
+        input, select { width: 100%; padding: 5px; }
+        button { margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Menghitung Biaya Tagihan Listrik PLN BANDUNG</h2>
+        <form id="tagihanForm">
+            <label for="namaPelanggan">Nama Pelanggan:</label>
+            <input type="text" id="namaPelanggan" required>
+
+            <label for="kategori">Kategori:</label>
+            <select id="kategori">
+                <option value="SOSIAL">SOSIAL</option>
+                <option value="RUMAH">RUMAH</option>
+                <option value="INDUSTRI">INDUSTRI</option>
+            </select>
+
+            <label for="jumlahPemakaian">Jumlah Pemakaian Listrik:</label>
+            <input type="number" id="jumlahPemakaian" required>
+
+            <button type="button" onclick="hitungTagihan()">Proses</button>
+            <button type="reset">Reset</button>
+        </form>
+
+        <h3>Rincian Tagihan</h3>
+        <table id="rincianTable">
+            <tr>
+                <th>Jumlah</th>
+                <th>Tarif per KWH</th>
+                <th>Abodemen</th>
+                <th>SubTotal</th>
+            </tr>
+        </table>
+
+        <p>Subtotal: <span id="subtotal"></span></p>
+        <p>Pajak: <span id="pajak"></span></p>
+        <p>Bayar: <span id="bayar"></span></p>
+    </div>
+
+    <script>
+        const kategoriData = {
+            'SOSIAL': { abodemen: 10000, tarifPerKWH: 300, pajak: 0 },
+            'RUMAH': { abodemen: 30000, tarifPerKWH: 500, pajak: 0.1 },
+            'INDUSTRI': { abodemen: 50000, tarifPerKWH: 1000, pajak: 0.3 }
+        };
+
+        function hitungTagihan() {
+            const namaPelanggan = document.getElementById('namaPelanggan').value;
+            const kategori = document.getElementById('kategori').value;
+            const jumlahPemakaian = parseInt(document.getElementById('jumlahPemakaian').value);
+
+            const data = kategoriData[kategori];
+            let subtotal = 0;
+            const table = document.getElementById('rincianTable');
+            table.innerHTML = '<tr><th>Jumlah</th><th>Tarif per KWH</th><th>Abodemen</th><th>SubTotal</th></tr>';
+
+            for (let i = 1; i <= jumlahPemakaian; i++) {
+                const tarifPerKWH = data.tarifPerKWH * i;
+                const subTotal = data.abodemen + tarifPerKWH;
+                subtotal += subTotal;
+
+                const row = table.insertRow(-1);
+                row.insertCell(0).textContent = i;
+                row.insertCell(1).textContent = tarifPerKWH;
+                row.insertCell(2).textContent = data.abodemen;
+                row.insertCell(3).textContent = subTotal;
+            }
+
+            const pajak = subtotal * data.pajak;
+            const total = subtotal + pajak;
+
+            document.getElementById('subtotal').textContent = subtotal;
+            document.getElementById('pajak').textContent = pajak;
+            document.getElementById('bayar').textContent = total;
+        }
+    </script>
+</body>
+</html>

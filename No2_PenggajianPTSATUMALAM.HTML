@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Program Penggajian</title>
+<style>
+body {
+  font-family: sans-serif;
+}
+
+table {
+    
+  width: 300px;
+  margin: 20px auto;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+}
+
+button {
+  padding: 8px 16px;
+  margin-left: 40%;
+  margin-right: -40%;
+  background-color: #4d4d4d53;
+  color: black;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+</style>
+</head>
+<body>
+<table>
+    <div style="text-align: center;">
+        <h1>PROGRAM PENGGAJIAN</h1>
+        <h2>PT. SATU MALAM 2 CINTA</h2>
+        <div id="output"></div>
+      </div>
+
+<table>
+  <tr>
+    <th>Nama Pegawai</th>
+    <td><input type="text" id="namaPegawai"></td>
+  </tr>
+  <tr>
+    <th>Jam Kerja</th>
+    <td><input type="text" id="jamKerja"></td>
+  </tr>
+  <tr>
+    <th>Upah per Jam</th>
+    <td><input type="text" id="upahPerJam"></td>
+  </tr>
+  <tr>
+    <th>Anak</th>
+    <td><input type="text" id="jumlahAnak"></td>
+  </tr>
+  <tr>
+    <th>Gaji</th>
+    <td><input type="text" id="gaji" readonly></td>
+  </tr>
+  <tr>
+    <th>Tunj.anak 10%</th>
+    <td><input type="text" id="tunjanganAnak" readonly></td>
+  </tr>
+  <tr>
+    <th>Total Gaji</th>
+    <td><input type="text" id="totalGaji" readonly></td>
+  </tr>
+</table>
+
+    <button onclick="hitungGaji()">proses</button>
+    <button onclick="resetForm()">Reset</button>
+
+
+<script>
+function hitungGaji() {
+  var namaPegawai = document.getElementById("namaPegawai").value;
+  var jamKerja = parseFloat(document.getElementById("jamKerja").value);
+  var upahPerJam = parseFloat(document.getElementById("upahPerJam").value);
+  var jumlahAnak = parseInt(document.getElementById("jumlahAnak").value);
+
+  var gaji = jamKerja * upahPerJam;
+  var tunjanganAnak = jumlahAnak * 0.1 * gaji;
+  var totalGaji = gaji + tunjanganAnak;
+
+  document.getElementById("gaji").value = gaji.toFixed(2);
+  document.getElementById("tunjanganAnak").value = tunjanganAnak.toFixed(2);
+  document.getElementById("totalGaji").value = totalGaji.toFixed(2);
+}
+
+function resetForm() {
+  document.getElementById("namaPegawai").value = "";
+  document.getElementById("jamKerja").value = "";
+  document.getElementById("upahPerJam").value = "";
+  document.getElementById("jumlahAnak").value = "";
+  document.getElementById("gaji").value = "";
+  document.getElementById("tunjanganAnak").value = "";
+  document.getElementById("totalGaji").value = "";
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Program Kredit Rumah</title>
+<style>
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  th, td {
+    text-align: left;
+    padding: 8px;
+    border: 1px solid #ddd;
+  }
+
+  th {
+    background-color: #f2f2f2;
+  }
+</style>
+</head>
+<body>
+
+<h1>PROGRAM KREDIT RUMAH</h1>
+
+<form>
+  <label for="typeRumah">Type Rumah:</label>
+  <select id="typeRumah">
+    <option value="ALAMANDA">ALAMANDA</option>
+    <option value="MAWAR">MAWAR</option>
+  </select>
+  <br>
+  <label for="lamaKredit">Lama Kredit:</label>
+  <input type="number" id="lamaKredit" value="24"> bulan
+  <br>
+  <button type="button" onclick="hitungAngsuran()">Proses</button>
+  <button type="reset">Reset</button>
+</form>
+
+<br>
+
+<div id="hargaRumah"></div>
+
+<br>
+
+<table id="angsuranTable">
+  <thead>
+    <tr>
+      <th>Bulan</th>
+      <th>Angsuran</th>
+      <th>Sisa</th>
+    </tr>
+  </thead>
+  <tbody>
+    </tbody>
+</table>
+
+<script>
+function hitungAngsuran() {
+  var typeRumah = document.getElementById("typeRumah").value;
+  var lamaKredit = parseInt(document.getElementById("lamaKredit").value);
+
+  var hargaRumah = 0;
+  if (typeRumah === "ALAMANDA") {
+    hargaRumah = 120000000;
+  } else if (typeRumah === "MAWAR") {
+    hargaRumah = 130000000;
+  }
+
+  var uangMuka = hargaRumah * 0.2;
+  var sisa = hargaRumah - uangMuka;
+  var angsuran = sisa / lamaKredit;
+
+  document.getElementById("hargaRumah").innerHTML = "Type Rumah: " + typeRumah + "<br>Harga Rumah: " + hargaRumah + 
+  "<br>Uang muka sebesar 20% dari total harga rumah: " + uangMuka +"<br>Sisa: " + sisa + "<br>Lama Kredit: " + lamaKredit + "<br>Angsuran: " + angsuran;
+
+  var angsuranTable = document.getElementById("angsuranTable").getElementsByTagName("tbody")[0];
+  angsuranTable.innerHTML = "";
+
+  for (var i = 1; i <= lamaKredit; i++) {
+    var row = angsuranTable.insertRow();
+    var cell1 = row.insertCell();
+    var cell2 = row.insertCell();
+    var cell3 = row.insertCell();
+
+    cell1.innerHTML = i;
+    cell2.innerHTML = angsuran;
+    sisa -= angsuran;
+    cell3.innerHTML = sisa;
+  }
+}
+</script>
+
+</body>
+</html>

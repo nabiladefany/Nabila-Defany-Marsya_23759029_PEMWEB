@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Pembelian Barang</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .container { width: 300px; margin: 0 auto; padding: 20px; border: 1px solid #ccc; }
+        label, input, select { display: block; margin-bottom: 10px; width: 100%; }
+        input[type="button"] { width: auto; display: inline-block; margin-right: 10px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>FORM PEMBELIAN BARANG</h2>
+        <form id="purchaseForm">
+            <label for="namaBarang">Nama Barang</label>
+            <select id="namaBarang">
+                <option value="Monitor">Monitor</option>
+                <option value="Keyboard">Keyboard</option>
+                <option value="Mouse">Mouse</option>
+            </select>
+
+            <label for="jumlah">Jumlah</label>
+            <input type="number" id="jumlah" required>
+
+            <label for="status">Status</label>
+            <select id="status">
+                <option value="Pelanggan">Pelanggan</option>
+                <option value="Bukan Pelanggan">Bukan Pelanggan</option>
+            </select>
+
+            <label for="harga">Harga</label>
+            <input type="number" id="harga" required>
+
+            <label for="total">Total</label>
+            <input type="text" id="total" readonly>
+
+            <label for="diskon">Diskon 10%</label>
+            <input type="text" id="diskon" readonly>
+
+            <label for="bayar">Bayar</label>
+            <input type="text" id="bayar" readonly>
+
+            <input type="button" value="Proses" onclick="hitungTotal()">
+            <input type="button" value="Reset" onclick="resetForm()">
+        </form>
+    </div>
+
+    <script>
+        function hitungTotal() {
+            const jumlah = parseFloat(document.getElementById('jumlah').value);
+            const harga = parseFloat(document.getElementById('harga').value);
+            const status = document.getElementById('status').value;
+            
+            if (jumlah && harga) {
+                const total = jumlah * harga;
+                document.getElementById('total').value = total.toFixed(2);
+                
+                let diskon = 0;
+                if (status === 'Pelanggan') {
+                    diskon = total * 0.1;
+                }
+                document.getElementById('diskon').value = diskon.toFixed(2);
+                
+                const bayar = total - diskon;
+                document.getElementById('bayar').value = bayar.toFixed(2);
+            } else {
+                alert('Mohon isi jumlah dan harga terlebih dahulu.');
+            }
+        }
+
+        function resetForm() {
+            document.getElementById('purchaseForm').reset();
+            document.getElementById('total').value = '';
+            document.getElementById('diskon').value = '';
+            document.getElementById('bayar').value = '';
+        }
+    </script>
+</body>
+</html>

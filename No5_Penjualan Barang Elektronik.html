@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Program P<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Program Penjualan Barang Elektronik</title>
+    <script type="text/javascript">
+        function calculateTotal() {
+            let harga = parseFloat(document.getElementById('harga').value);
+            let jumlah = parseInt(document.getElementById('jumlah').value);
+            let total = harga * jumlah;
+
+            if (document.getElementById('usb').checked) {
+                total += 50000;
+            }
+            if (document.getElementById('memory').checked) {
+                total += 120000;
+            }
+            if (document.getElementById('speaker').checked) {
+                total += 40000;
+            }
+
+            let pajak = total * 0.10;
+            let bayar = total + pajak;
+
+            document.getElementById('total').value = total;
+            document.getElementById('pajak').value = pajak;
+            document.getElementById('bayar').value = bayar;
+        }
+
+        function resetForm() {
+            document.getElementById('salesForm').reset();
+            document.getElementById('total').value = '';
+            document.getElementById('pajak').value = '';
+            document.getElementById('bayar').value = '';
+        }
+    </script>
+</head>
+<body>
+    <h1 align="center">PROGRAM PENJUALAN BARANG ELEKTRONIK</h1>
+    <hr width="" color="black">
+    <form id="salesForm" align="center">
+        Nama Barang: <input type="text" size="10" id="namaBarang"><br>
+        Harga      : <input type="text" size="8"  id="harga" ><br>
+        Jumlah     : <input type="text" size="8" id="jumlah"><br>
+        Aksesoris :<input type="checkbox" id="usb"> USB (50,000)<br>
+                   <input type="checkbox" id="memory"> Memory (120,000)<br>
+                   <input type="checkbox" id="speaker"> Speaker (40,000)<br>
+        Total: <input type="text" id="total" readonly><br>
+        Pajak 10%: <input type="text" id="pajak" readonly><br>
+        Bayar: <input type="text" id="bayar" readonly><br>
+        <hr color="black">
+        <button type="button" onclick="calculateTotal()">Proses</button>
+        <button type="button" onclick="resetForm()">Reset</button>
+    </form>
+</body>

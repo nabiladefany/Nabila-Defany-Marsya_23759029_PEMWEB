@@ -1,0 +1,93 @@
+!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Program Penjualan Motor</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .container { width: 400px; }
+        label { display: inline-block; width: 120px; }
+        select, input[type="text"], input[type="number"] { width: 200px; margin-bottom: 5px; }
+        input[type="checkbox"], input[type="radio"] { margin-right: 5px; }
+        button { margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>PROGRAM PENJUALAN MOTOR</h2>
+        <form id="salesForm">
+            <label for="merkMotor">Merk Motor:</label>
+            <select id="merkMotor" onchange="updateHarga()">
+                <option value="15000000">HONDA</option>
+                <option value="14000000">YAMAHA</option>
+                <option value="13000000">SUZUKI</option>
+            </select><br>
+
+            <label>Aksesoris:</label><br>
+            <input type="checkbox" id="velg" value="450000"> <label for="velg">Velg Racing</label><br>
+            <input type="checkbox" id="helm" value="250000"> <label for="helm">Helm</label><br>
+            <input type="checkbox" id="jaket" value="300000"> <label for="jaket">Jaket</label><br>
+
+            <label>Cara Pembayaran:</label><br>
+            <input type="radio" name="pembayaran" id="tunai" value="tunai" checked> <label for="tunai">Tunai</label>
+            <input type="radio" name="pembayaran" id="kredit" value="kredit"> <label for="kredit">Kredit</label><br>
+
+            <label for="harga">Harga:</label>
+            <input type="text" id="harga" readonly><br>
+
+            <label for="bungaDiskon">Bunga/Diskon:</label>
+            <input type="text" id="bungaDiskon" readonly><br>
+
+            <label for="total">Total:</label>
+            <input type="text" id="total" readonly><br>
+
+            <button type="button" onclick="hitungTotal()">Proses</button>
+            <button type="reset" onclick="resetForm()">Reset</button>
+        </form>
+    </div>
+
+    <script>
+        function updateHarga() {
+            const harga = document.getElementById('merkMotor').value;
+            document.getElementById('harga').value = harga;
+        }
+
+        function hitungTotal() {
+            let harga = parseInt(document.getElementById('merkMotor').value);
+            const pembayaran = document.querySelector('input[name="pembayaran"]:checked').value;
+            let bungaDiskon = 0;
+            let total = harga;
+
+            // Hitung aksesoris
+            const aksesoris = document.querySelectorAll('input[type="checkbox"]:checked');
+            aksesoris.forEach(item => {
+                total += parseInt(item.value);
+            });
+
+            // Hitung bunga/diskon
+            if (pembayaran === 'tunai') {
+                bungaDiskon = -0.1 * total; // Diskon 10%
+            } else {
+                bungaDiskon = 0.15 * total; // Bunga 15%
+            }
+
+            total += bungaDiskon;
+
+            document.getElementById('harga').value = harga.toLocaleString('id-ID');
+            document.getElementById('bungaDiskon').value = bungaDiskon.toLocaleString('id-ID');
+            document.getElementById('total').value = total.toLocaleString('id-ID');
+        }
+
+        function resetForm() {
+            document.getElementById('salesForm').reset();
+            document.getElementById('harga').value = '';
+            document.getElementById('bungaDiskon').value = '';
+            document.getElementById('total').value = '';
+        }
+
+        // Inisialisasi harga saat halaman dimuat
+        updateHarga();
+    </script>
+</body>
+</html>
